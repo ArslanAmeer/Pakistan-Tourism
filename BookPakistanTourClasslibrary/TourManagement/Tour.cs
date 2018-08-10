@@ -11,6 +11,11 @@ namespace BookPakistanTourClasslibrary.TourManagement
 {
     public class Tour
     {
+        public Tour()
+        {
+            TourImages = new List<TourImages>();
+        }
+
         [Key]
         public int Id { get; set; }
 
@@ -22,6 +27,10 @@ namespace BookPakistanTourClasslibrary.TourManagement
 
         [Required]
         public float Price { get; set; }
+
+        public float Sale { get; set; }
+
+        public ICollection<TourImages> TourImages { get; set; }
 
         public DateTime? DepartureDate { get; set; }
 
