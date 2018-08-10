@@ -4,6 +4,8 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BookPakistanTourClasslibrary.BannerManagement;
+using BookPakistanTourClasslibrary.BookingManagment;
 using BookPakistanTourClasslibrary.CompanyManagement;
 using BookPakistanTourClasslibrary.FeedbackManagement;
 using BookPakistanTourClasslibrary.LocationManagement;
@@ -32,6 +34,10 @@ namespace BookPakistanTourClasslibrary
         public DbSet<Feedback> Feedbacks { get; set; }
 
         public DbSet<Company> Companies { get; set; }
+
+        public DbSet<MainBanner> MainBanners { get; set; }
+
+        public DbSet<Booking> Bookings { get; set; }
 
     }
 }
