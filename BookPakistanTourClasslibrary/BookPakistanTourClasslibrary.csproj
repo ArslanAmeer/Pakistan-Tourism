@@ -47,6 +47,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BannerManagement\BannerHandler.cs" />
+    <Compile Include="BannerManagement\MainBanner.cs" />
+    <Compile Include="BookingManagment\Booking.cs" />
+    <Compile Include="BookingManagment\BookingHandler.cs" />
     <Compile Include="CompanyManagement\Company.cs" />
     <Compile Include="CompanyManagement\CompanyHandler.cs" />
     <Compile Include="DbContextClass.cs" />
@@ -55,9 +59,19 @@
     <Compile Include="LocationManagement\City.cs" />
     <Compile Include="LocationManagement\Country.cs" />
     <Compile Include="LocationManagement\LocationHandler.cs" />
+    <Compile Include="Migrations\201808102233067_InitialCreate.cs" />
+    <Compile Include="Migrations\201808102233067_InitialCreate.Designer.cs">
+      <DependentUpon>201808102233067_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808102239503_AddPropInCompany.cs" />
+    <Compile Include="Migrations\201808102239503_AddPropInCompany.Designer.cs">
+      <DependentUpon>201808102239503_AddPropInCompany.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TourManagement\Tour.cs" />
     <Compile Include="TourManagement\TourHandler.cs" />
+    <Compile Include="TourManagement\TourImages.cs" />
     <Compile Include="UserManagement\Role.cs" />
     <Compile Include="UserManagement\User.cs" />
     <Compile Include="UserManagement\UserHandler.cs" />
@@ -67,6 +81,13 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201808102233067_InitialCreate.resx">
+      <DependentUpon>201808102233067_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808102239503_AddPropInCompany.resx">
+      <DependentUpon>201808102239503_AddPropInCompany.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
