@@ -24,5 +24,7 @@ namespace BookPakistanTourClasslibrary.CompanyManagement
 
         public string FacebookPageUrl { get; set; }
 
+        public string ImageUrl { get; set; }
+
     }
 }
