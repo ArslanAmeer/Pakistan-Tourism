@@ -14,7 +14,7 @@ namespace BookPakistanTourClasslibrary.BannerManagement
 
         public string Caption { get; set; }
 
-        public string Banner_Url { get; set; }
+        public string BannerUrl { get; set; }
 
     }
 }
