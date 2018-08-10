@@ -25,6 +25,8 @@ namespace BookPakistanTourClasslibrary.UserManagement
         [Required]
         public string FullAddress { get; set; }
 
+        public string ImageUrl { get; set; }
+
         public City City { get; set; }
 
         public virtual Role Role { get; set; }
