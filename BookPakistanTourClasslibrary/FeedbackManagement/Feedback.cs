@@ -14,10 +14,12 @@ namespace BookPakistanTourClasslibrary.FeedbackManagement
         [Key]
         public int Id { get; set; }
 
+        public string Name { get; set; }
+
         [Required]
         public string Message { get; set; }
 
-        public Company Company { get; set; }
+        public string DateEntered { get; set; }
 
         public Tour Tour { get; set; }
 

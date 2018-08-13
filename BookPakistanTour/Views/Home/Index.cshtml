@@ -1,0 +1,12 @@
+﻿@using BookPakistanTour.Models
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<TourSummaryModel> tours = ViewBag.indexTours;
+}
+
+
+@Html.Partial("~/Views/Shared/_TourSummaryView.cshtml", tours)
+
+

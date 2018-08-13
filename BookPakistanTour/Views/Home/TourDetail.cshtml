@@ -1,0 +1,144 @@
+﻿@using BookPakistanTourClasslibrary
+@using BookPakistanTourClasslibrary.FeedbackManagement
+@using BookPakistanTourClasslibrary.UserManagement
+@model BookPakistanTourClasslibrary.TourManagement.Tour
+
+@{
+    ViewBag.Title = "TourDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<Feedback> feedbacks = ViewBag.feedbacks;
+    User currentUser = (User)Session[WebUtil.CURRENT_USER];
+}
+
+<h2>Tour Detail</h2>
+
+<div class="text-center">
+    <h3>@Model.Title</h3>
+
+    <hr />
+    <dl class="dl-horizontal text-left">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sale)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sale)%
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DepartureDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DepartureDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Company)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Company.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Company.City)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Company.City.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Company.City.Country)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Company.City.Country.Name)
+        </dd>
+
+        <dt>
+            Trip Price
+        </dt>
+
+        <dd style="font-size: 1.2em; font-weight: bold">
+            @Html.DisplayFor(model => model.Price)/- Only - Per Person
+        </dd>
+        <dd>
+            <a class="btn btn-primary" style="width: 30%" href="@Url.Action("BookTrip", "Booking", new { id = Model.Id})">Book Now</a>
+        </dd>
+        <hr />
+        <dt>
+            @Html.DisplayNameFor(model => model.TourImages)
+        </dt>
+
+        <dd>
+            @foreach (var item in Model.TourImages)
+            {
+                <br /><img src="@Url.Content(item.ImageUrl)" alt="images" style="width: 80%; margin-top: 10px" />
+            }
+        </dd>
+    </dl>
+</div>
+
+<div class="detailBox">
+    <div class="titleBox">
+        <label><h3>Feedbacks!</h3></label>
+    </div>
+    <div class="commentBox">
+        <p class="taskDescription">Your Feedback Helps Us in Improving ! Be Grateful 😊</p>
+    </div>
+    <div class="actionBox">
+        <ul class="commentList">
+
+            @if (feedbacks != null)
+            {
+                foreach (var feedback in feedbacks)
+                {
+                    <li>
+                        <div class="commenterImage">
+                            <span class="fa fa-user-circle fa-2x"></span>
+                        </div>
+                        <div class="commentText">
+                            <p class="">@feedback.Message</p> <span class="date sub-text">Added By: <b>@feedback.Name</b> on @feedback.DateEntered</span>
+
+                        </div>
+                    </li>
+                }
+            }
+
+        </ul>
+        @if (currentUser != null)
+        {
+
+            using (Html.BeginForm("SaveFeedback", "Home", new { id = Model.Id }, FormMethod.Post, new { @class = "form-inline", enctype = "multipart/form-data" }))
+            {
+                <div class="form-group">
+                    <input name="Name" class="form-control" type="text" placeholder="Your Name" />
+                </div>
+                <div class="form-group">
+                    <input name="Message" class="form-control" type="text" placeholder="Your comments" />
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-default" type="submit">Add Feedback</button>
+                </div>
+            }
+
+        }
+        else
+        {
+            <a href="@Url.Action("Login","User")" class="btn btn-info btn-block">Login To Enter Feedback</a>
+        }
+
+    </div>
+</div>
+

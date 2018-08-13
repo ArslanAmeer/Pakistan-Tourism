@@ -16,7 +16,6 @@ namespace BookPakistanTourClasslibrary.FeedbackManagement
             using (_db)
             {
                 return (from f in _db.Feedbacks
-                     .Include(f => f.Company)
                      .Include(f => f.Tour)
                         select f).ToList();
             }
@@ -27,31 +26,29 @@ namespace BookPakistanTourClasslibrary.FeedbackManagement
             using (_db)
             {
                 return (from f in _db.Feedbacks
-                        .Include(f => f.Company)
                         .Include(f => f.Tour)
                         where f.Id == id
                         select f).FirstOrDefault();
             }
         }
 
-        public List<Feedback> GetAllFeedbacksByCompanyId(int id)
-        {
-            using (_db)
-            {
-                return (from f in _db.Feedbacks
-                        .Include(f => f.Company)
-                        .Include(f => f.Tour)
-                        where f.Company.Id == id
-                        select f).ToList();
-            }
-        }
+        //public List<Feedback> GetAllFeedbacksByCompanyId(int id)
+        //{
+        //    using (_db)
+        //    {
+        //        return (from f in _db.Feedbacks
+        //                .Include(f => f.Company)
+        //                .Include(f => f.Tour)
+        //                where f.Company.Id == id
+        //                select f).ToList();
+        //    }
+        //}
 
         public List<Feedback> GetAllFeedbackByTourId(int id)
         {
             using (_db)
             {
                 return (from f in _db.Feedbacks
-                        .Include(f => f.Company)
                         .Include(f => f.Tour)
                         where f.Tour.Id == id
                         select f).ToList();
@@ -62,7 +59,6 @@ namespace BookPakistanTourClasslibrary.FeedbackManagement
         {
             using (_db)
             {
-                _db.Entry(feedback.Company).State = EntityState.Unchanged;
                 _db.Entry(feedback.Tour).State = EntityState.Unchanged;
                 _db.Feedbacks.Add(feedback);
                 _db.SaveChanges();
