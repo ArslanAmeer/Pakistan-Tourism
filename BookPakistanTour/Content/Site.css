@@ -26,3 +26,39 @@ textarea {
 /*.login-box .form-control {
         margin: auto;
     }*/
+
+.affix {
+    top: 0;
+    width: 100%;
+    z-index: 9999 !important;
+}
+
+    .affix + .container-fluid {
+        padding-top: 70px;
+    }
+
+.carousel {
+    border-radius: 10px !important;
+    overflow: hidden;
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*~~~~~~~~~~~~~~~~~~~~~~~~~  CUSTOM CSS (Arslan Ameer)  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+
+/* NAVBAR USER Details DROPDOWN*/
+
+.navbar-login {
+    width: 305px;
+    padding: 10px;
+    padding-bottom: 0px;
+}
+
+.navbar-login-session {
+    padding: 10px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+}

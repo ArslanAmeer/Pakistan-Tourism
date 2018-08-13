@@ -1,0 +1,137 @@
+﻿@using BookPakistanTourClasslibrary
+@using BookPakistanTourClasslibrary.UserManagement
+
+@{
+    User currentUser = (User)Session[WebUtil.CURRENT_USER];
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title BPT-Admin</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+</head>
+<body>
+
+    <!-- TopBar (NAVBAR) -->
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+
+            <!-- Left Most Logo and Page TITLE -->
+
+            <div class="navbar-header">
+
+                <!--Collapsable Navbar button for small screens -->
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#colNav">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a href="@Url.Action("Index","Home")" class="navbar-brand">Book <span class="fa fa-ticket"></span> Pakistan T<i class="fa fa-globe" style="font-size:small"></i>ur</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="colNav">
+
+                <!-- Next icons/Lists of Options in Unordered List Type -->
+
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("HOME", "Index", "Home")</li>
+                    <li><a href="#">All Tours</a></li>
+                    <li><a href="#">Tour Companies</a></li>
+
+                    <!-- User Detail Dropdown with custom CSS -->
+
+                    @if (currentUser != null)
+                    {
+                        <li class="dropdown notextselect">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-user-circle-o fa-lg"></span> @currentUser.FullName <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <div class="navbar-login">
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <div style="width: 80px; height: 95px">
+                                                    <img class="img-responsive img-rounded" style="width: 100%; height: 100%" alt="user-image" src="@Url.Content(currentUser.ImageUrl)" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-8">
+                                                <p class="text-left"><strong>@currentUser.FullName</strong></p>
+                                                <p class="text-left small">@currentUser.Email</p>
+                                                <p class="text-left">
+                                                    <a href="@Url.Action("UserGuestUpdate","User", new { id = currentUser.Id})" class="btn btn-default btn-block">UPDATE</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        if (currentUser.IsInRole(WebUtil.ADMIN_ROLE))
+                        {
+                            <li>@Html.ActionLink("Admin Panel", "AdminPanel", "Admin")</li>
+                        }
+                    }
+                </ul>
+
+                <!-- Nav Bar Right Area Buttons -->
+
+                <ul class="nav navbar-nav navbar-right">
+                    @if (currentUser != null)
+                    {
+                        <li><a href="@Url.Action("Logout", "User")"><span class="glyphicon glyphicon-log-out"></span> Logout </a></li>
+                    }
+                    else
+                    {
+                        <li><a href="@Url.Action("SignUp", "User")"><span class="fa fa-user-plus fa-lg"></span> SignUp</a></li>
+                        <li><a href="@Url.Action("Login", "User")"><span class="fa fa-sign-in fa-lg"></span> Login</a></li>
+                    }
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+
+            <!-- LEFT SECTION -->
+            <div class="col-lg-3">
+                <div class="list-group text-center notextselect">
+                    <h3 class="list-group-item-heading text-center">ADMIN OPTI<i class="fa fa-gear fa-spin"></i>NS</h3>
+                    @*@Html.ActionLink("Overview", "AdminPanel", "Admin", null, new { @class = "list-group-item" })*@
+                    <a href="@Url.Action("TourManagment","Tour")" class="list-group-item"> Tours Management <i class="fa fa-globe"></i><i class="badge" style="font-size:x-small; margin-top:2px">@Html.Action("GetTourCount", "Tour")</i></a>
+                    <a href="@Url.Action("CompanyManagment","Company")" class="list-group-item">Companies Management <i class="fa fa-building"></i><i class="badge" style="font-size:x-small;margin-top:2px">@Html.Action("GetCompanyCount", "Company")</i></a>
+                    <a href="@Url.Action("UserManagment","User")" class="list-group-item"> User Management <i class="fa fa-group"></i><i class="badge" style="font-size:x-small;margin-top:2px">@Html.Action("UserCount", "User")</i></a>
+                    <a href="@Url.Action("BannerManagment","Admin")" class="list-group-item"> Main Page Banners <span class="fa fa-image"></span><i class="badge" style="font-size:x-small;margin-top:2px">@Html.Action("GetBannerCount", "Admin")</i></a>
+                    <a href="@Url.Action("LocationManagment","Location")" class="list-group-item">Location Management <span class="fa fa-map-marker"></span><span class="badge" style="font-size:x-small;margin-top:2px">@Html.Action("GetCountriesCount", "Location")</span></a>
+                </div>
+            </div>
+
+            <!-- RIGHT SECTION -->
+            @RenderBody()
+
+        </div>
+    </div>
+
+    @*<div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            </footer>
+        </div>*@
+
+    <script src="~/Scripts/jquery-2.2.4.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    @RenderSection("myScript", false)
+</body>
+</html>
