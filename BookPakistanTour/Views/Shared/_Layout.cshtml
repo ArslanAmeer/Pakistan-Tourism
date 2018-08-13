@@ -1,6 +1,9 @@
-﻿@using BookPakistanTourClasslibrary
+﻿@using BookPakistanTour.Models
+@using BookPakistanTourClasslibrary
 @using BookPakistanTourClasslibrary.BannerManagement
+@using BookPakistanTourClasslibrary.TourManagement
 @using BookPakistanTourClasslibrary.UserManagement
+@using FYProject1.Models
 
 @{
     User currentUser = (User)Session[WebUtil.CURRENT_USER];
@@ -8,6 +11,7 @@
     List<MainBanner> banners = new BannerHandler().GetAllBanners();
     int count = 0;
     int numb = 0;
+    List<TourSummaryModel> PoluplarTours = ModelHelper.ToTourSummaryList(new TourHandler().GetLatestTours(8));
 }
 
 <!DOCTYPE html>

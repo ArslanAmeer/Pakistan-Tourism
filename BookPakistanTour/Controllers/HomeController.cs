@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Web;
 using System.Web.Mvc;
 using BookPakistanTourClasslibrary.FeedbackManagement;
@@ -32,11 +33,13 @@ namespace BookPakistanTour.Controllers
             return View(tour);
         }
 
-        public ActionResult ToursByCompany(string id)
+        public ActionResult ToursByCompany(string name)
         {
-            throw new NotImplementedException();
+            ViewBag.indexTours = ModelHelper.ToTourSummaryList(new TourHandler().GetToursByCompanyName(name));
+            return View();
         }
 
+        [HttpPost]
         public ActionResult SaveFeedback(FormCollection fdata, int id)
         {
             try
@@ -60,6 +63,7 @@ namespace BookPakistanTour.Controllers
             }
 
         }
+
 
     }
 }

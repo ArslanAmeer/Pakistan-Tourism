@@ -84,5 +84,17 @@ namespace BookPakistanTourClasslibrary.TourManagement
                 return (from t in _db.Tours select t).Count();
             }
         }
+
+        public List<Tour> GetToursByCompanyName(string name)
+        {
+            using (_db)
+            {
+                return (from t in _db.Tours
+                        .Include(a => a.Company)
+                        .Include(a => a.TourImages)
+                        where t.Company.Name == name
+                        select t).ToList();
+            }
+        }
     }
 }
