@@ -16,7 +16,8 @@ namespace BookPakistanTourClasslibrary.TourManagement
             using (_db)
             {
                 return (from t in _db.Tours
-                        .Include(t => t.Company)
+                        .Include(t => t.Company.City.Country)
+                        .Include(t => t.TourImages)
                         select t).ToList();
             }
         }
@@ -26,9 +27,22 @@ namespace BookPakistanTourClasslibrary.TourManagement
             using (_db)
             {
                 return (from t in _db.Tours
-                        .Include(t => t.Company)
+                        .Include(t => t.Company.City.Country)
+                        .Include(t => t.TourImages)
                         where t.Id == id
                         select t).FirstOrDefault();
+            }
+        }
+
+        public List<Tour> GetLatestTours(int numb)
+        {
+            using (_db)
+            {
+                return (from t in _db.Tours
+                        .Include(t => t.Company)
+                        .Include(t => t.TourImages)
+                        orderby t.DepartureDate descending
+                        select t).Take(numb).ToList();
             }
         }
 
@@ -46,19 +60,29 @@ namespace BookPakistanTourClasslibrary.TourManagement
         {
             using (_db)
             {
+                _db.Entry(tour.Company).State = EntityState.Unchanged;
                 _db.Entry(tour).State = EntityState.Modified;
                 _db.SaveChanges();
             }
         }
 
-        public void DeleteTour(int id)
+        public void DeleteTour(Tour tour)
         {
             using (_db)
             {
-                _db.Tours.Remove(GetTourById(id));
+                _db.Entry(tour.Company).State = EntityState.Unchanged;
+                _db.Entry(tour).State = EntityState.Deleted;
+                _db.Tours.Remove(tour);
                 _db.SaveChanges();
             }
         }
 
+        public int GetTourCount()
+        {
+            using (_db)
+            {
+                return (from t in _db.Tours select t).Count();
+            }
+        }
     }
 }

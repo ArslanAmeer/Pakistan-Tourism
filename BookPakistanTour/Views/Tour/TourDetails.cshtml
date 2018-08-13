@@ -1,0 +1,85 @@
+﻿@model BookPakistanTourClasslibrary.TourManagement.Tour
+
+@{
+    ViewBag.Title = "TourDetails";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h3 class="list-group-item-heading text-center notextselect">Tour Details</h3>
+
+<div class="col-lg-9">
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sale)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sale)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DepartureDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DepartureDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Company)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Company.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Company.City)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Company.City.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Company.City.Country)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Company.City.Country.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TourImages)
+        </dt>
+
+        <dd>
+            @foreach (var item in Model.TourImages)
+            {
+                <img src="@Url.Content(item.ImageUrl)" alt="images" height="150" width="150" />
+            }
+        </dd>
+
+    </dl>
+    <p>
+        @Html.ActionLink("Edit", "EditTour", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "TourManagment")
+    </p>
+</div>

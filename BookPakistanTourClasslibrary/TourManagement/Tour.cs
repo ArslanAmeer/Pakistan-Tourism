@@ -32,7 +32,7 @@ namespace BookPakistanTourClasslibrary.TourManagement
 
         public ICollection<TourImages> TourImages { get; set; }
 
-        public DateTime? DepartureDate { get; set; }
+        public string DepartureDate { get; set; }
 
         public Company Company { get; set; }
 
