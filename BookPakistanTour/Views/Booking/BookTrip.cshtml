@@ -1,0 +1,102 @@
+﻿@using BookPakistanTourClasslibrary
+@using BookPakistanTourClasslibrary.UserManagement
+@model BookPakistanTourClasslibrary.TourManagement.Tour
+
+@{
+    ViewBag.Title = "BookTrip";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    User currentUser = (User)Session[WebUtil.CURRENT_USER];
+}
+
+<h2>Tour Booking</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @if (Model.Description.Length > 50)
+            {
+                @Model.Description.Substring(0, 29)
+            }
+            else
+            {
+                @Html.DisplayFor(model => model.Description)
+            }
+
+        </dd>
+
+        <dt>
+            Travel Company
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Company.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd style="font-weight: bold">
+            @Html.DisplayFor(model => model.Price)/- Only - Per Person
+        </dd>
+
+        <dt>
+            Discount
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sale)%
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DepartureDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DepartureDate) <p class="text-danger" style="font-size: smaller">Please ReConfirm Timings On Call</p>
+        </dd>
+
+        <dt>
+            Final Price
+        </dt>
+        <dd style="font-size: 1.2em; font-weight: bold">
+            @if (Model.Sale != 0 || Model.Sale != null)
+            {
+                @($"{Model.Price - (Model.Price * Model.Sale / 100):N0}")
+            }
+            else
+            {
+                @Model.Price
+            }
+            /- Per Person
+        </dd>
+    </dl>
+</div>
+<a href="@Url.Action("TourDetail","Home", new { id = Model.Id})">Revisit Tour</a>
+<hr />
+<h4>Booking By:</h4>
+<dl class="dl-horizontal">
+    <dt>Name</dt>
+    <dd>@currentUser.FullName</dd>
+    <dt>Phone</dt>
+    <dd>@currentUser.Phone</dd>
+    <dt>Email</dt>
+    <dd>@currentUser.Email</dd>
+    <dd><a href="@Url.Action("UserGuestUpdate","User", new {id = currentUser.Id})">Update Your Details</a></dd>
+</dl>
+<hr />
+<div class="text-center text-danger">Please Make Sure Before Clicking Confirm Booking!</div>
+<a class="btn btn-primary btn-block" href="@Url.Action("BookingConfirmed", "Booking", new {id = Model.Id})">Confirm Booking</a>

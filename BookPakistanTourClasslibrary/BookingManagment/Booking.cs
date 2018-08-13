@@ -14,17 +14,6 @@ namespace BookPakistanTourClasslibrary.BookingManagment
         [Key]
         public int Id { get; set; }
 
-        //[Required]
-        //public string Name { get; set; }
-
-        //[Required]
-        //public float Phone { get; set; }
-
-        //public string Email { get; set; }
-
-        //[Required]
-        //public string Address { get; set; }
-
         public User User { get; set; }
 
         public Tour Tour { get; set; }

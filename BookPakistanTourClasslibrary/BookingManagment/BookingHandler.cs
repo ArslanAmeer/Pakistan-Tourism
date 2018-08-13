@@ -53,5 +53,16 @@ namespace BookPakistanTourClasslibrary.BookingManagment
                         select b).ToList();
             }
         }
+
+        public void AddBooking(Booking booking)
+        {
+            using (_db)
+            {
+                _db.Entry(booking.Tour).State = EntityState.Unchanged;
+                _db.Entry(booking.User).State = EntityState.Unchanged;
+                _db.Bookings.Add(booking);
+                _db.SaveChanges();
+            }
+        }
     }
 }
