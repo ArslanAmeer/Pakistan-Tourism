@@ -36,7 +36,7 @@ namespace BookPakistanTourClasslibrary.UserManagement
             return Role != null && Role.Id == id;
         }
 
-        public DateTime? BirthDate { get; set; }
+        public String BirthDate { get; set; }
 
         public bool? IsActive { get; set; }
 

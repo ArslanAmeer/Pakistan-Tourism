@@ -1,0 +1,133 @@
+﻿@model BookPakistanTourClasslibrary.UserManagement.User
+
+@{
+    ViewBag.Title = "SignUp";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-lg-9 login-box">
+
+    <h2 class="text-center">User Registration</h2>
+    @using (Html.BeginForm("SignUp", "User", FormMethod.Post, new { id = "signupform", enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.FullName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.FullAddress, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.FullAddress, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.FullAddress, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @*-----------------------DROP DOWN ALERT-------------------------*@
+            <div class="form-group">
+                <label class="control-label col-md-2"></label>
+                <div class="col-md-10">
+                    <div id="countrydiv">
+                        @Html.DropDownList("CountryList", (IEnumerable<SelectListItem>)ViewBag.CountryList, "- Country -", new { @class = "form-control text-center", style = "Float: Left" })
+                    </div>
+                    <div id="citydiv">
+
+                    </div>
+                </div>
+            </div>
+            @*------------------------------------------------*@
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Upload Image</label>
+                <div class="col-md-10">
+                    <input type="file" id="profilePic" name="profilePic" value="" />
+                    @Html.ValidationMessageFor(model => model.ImageUrl, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.BirthDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="date" name="BirthDate" value="" class="form-control" />
+                    @Html.ValidationMessageFor(model => model.BirthDate, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-3">@Html.RadioButton("Gender", "Male", new { @checked = true }) Male </label>
+                <label class="control-label col-md-3">@Html.RadioButton("Gender", "Female") Female </label>
+                @*@Html.LabelFor(model => model.Female, htmlAttributes: new {@class = "control-label col-md-3"})
+                    <div class="col-md-1">
+                        <div class="checkbox pull-right">
+                            @Html.RadioButton("Gender", "Female")
+                            @Html.ValidationMessageFor(model => model.Female, "", new {@class = "text-danger"})
+                        </div>
+                    </div>*@
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Sign Up" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section myScript{
+    <script type="text/javascript">
+
+        var ddlcountry = document.getElementById("CountryList");
+        ddlcountry.addEventListener("change",
+            () => {
+                var countryId = ddlcountry.selectedIndex;
+                var url = "/User/CityLists/" + countryId;
+
+                fetch(url).then((response) => {
+                    return response.text();
+                }).then((data) => {
+                    const el = document.getElementById("citydiv");
+                    el.innerHTML = data;
+                });
+            });
+
+        $("#profilePic").click(function () {
+            alert(" Please Upload 4:3 PORTRAIT image!");
+        });
+
+    </script>
+
+}

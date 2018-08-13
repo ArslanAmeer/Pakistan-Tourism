@@ -1,0 +1,55 @@
+﻿@model IEnumerable<BookPakistanTourClasslibrary.UserManagement.User>
+
+@{
+    ViewBag.Title = "UserManagment";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h3 class="list-group-item-heading text-center notextselect">User Managment</h3>
+
+<div class="col-lg-9">
+    <h4>List Of Registered Users</h4>
+
+    <table id="datatable" class="table table-condensed table-striped table-bordered table-hover display compact">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FullName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Role)
+                </th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Role.Name)
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.Phone)
+                        </td>*@
+                    <td class="text-center">
+                        @Html.ActionLink("Edit", "UserEdit", new { id = item.Id }) |
+                        @Html.ActionLink("Details", "UserDetails", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "UserDelete", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+    <br />
+</div>
