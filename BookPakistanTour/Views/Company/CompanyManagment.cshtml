@@ -1,0 +1,52 @@
+﻿@model IEnumerable<BookPakistanTourClasslibrary.CompanyManagement.Company>
+
+@{
+    ViewBag.Title = "CompanyManagment";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h3 class="list-group-item-heading text-center notextselect">Company Managment</h3>
+
+<div class="col-lg-9">
+    <h4>List Of Companies</h4>
+    <p>
+        @Html.ActionLink("Create New", "AddCompany", "Company")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FacebookPageUrl)
+            </th>
+            <th>
+                Actions
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FacebookPageUrl)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditCompany", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "CompanyDetails", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "DeleteCompany", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

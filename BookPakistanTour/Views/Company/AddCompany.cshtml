@@ -1,0 +1,99 @@
+﻿@model BookPakistanTourClasslibrary.CompanyManagement.Company
+
+@{
+    ViewBag.Title = "AddCompany";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="col-lg-9">
+    <h3 class="list-group-item-heading text-center notextselect">ADD COMPANY </h3>
+    @using (Html.BeginForm("AddCompany", "Company", FormMethod.Post, new { id = "addcompanyform", enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Company</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @*-----------------------DROP DOWN ALERT-------------------------*@
+            <div class="form-group">
+                <label class="control-label col-md-2"></label>
+                <div class="col-md-10">
+                    <div id="countrydiv">
+                        @Html.DropDownList("CountryList", (IEnumerable<SelectListItem>)ViewBag.CountryList, "- Country -", new { @class = "form-control text-center", style = "Float: Left" })
+                    </div>
+                    <div id="citydiv">
+
+                    </div>
+                </div>
+            </div>
+            @*------------------------------------------------*@
+            <div class="form-group">
+                @Html.LabelFor(model => model.FacebookPageUrl, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.FacebookPageUrl, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.FacebookPageUrl, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Upload Image</label>
+                <div class="col-md-10">
+                    <input type="file" id="profilePic" name="profilePic" value="" />
+                    @Html.ValidationMessageFor(model => model.ImageUrl, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "CompanyManagment")
+    </div>
+</div>
+
+
+@section myScript{
+    <script type="text/javascript">
+
+        var ddlcountry = document.getElementById("CountryList");
+        ddlcountry.addEventListener("change",
+            () => {
+                var countryId = ddlcountry.selectedIndex;
+                var url = "/User/CityLists/" + countryId;
+
+                fetch(url).then((response) => {
+                    return response.text();
+                }).then((data) => {
+                    const el = document.getElementById("citydiv");
+                    el.innerHTML = data;
+                });
+            });
+
+        $("#profilePic").click(function () {
+            alert(" Please Upload 4:3 PORTRAIT image!");
+        });
+
+    </script>
+
+}

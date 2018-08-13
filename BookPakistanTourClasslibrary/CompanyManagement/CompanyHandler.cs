@@ -17,7 +17,7 @@ namespace BookPakistanTourClasslibrary.CompanyManagement
             using (_db)
             {
                 return (from c in _db.Companies
-                        .Include(c => c.City)
+                        .Include(c => c.City.Country)
                         select c).ToList();
             }
         }
@@ -27,7 +27,7 @@ namespace BookPakistanTourClasslibrary.CompanyManagement
             using (_db)
             {
                 return (from c in _db.Companies
-                        .Include(c => c.City)
+                        .Include(c => c.City.Country)
                         where c.Id == id
                         select c).FirstOrDefault();
             }
@@ -52,14 +52,22 @@ namespace BookPakistanTourClasslibrary.CompanyManagement
             }
         }
 
-        public void DeleteCompany(int id)
+        public void DeleteCompany(Company company)
         {
             using (_db)
             {
-                _db.Companies.Remove(GetCompanybyId(id));
+                _db.Entry(company).State = EntityState.Deleted;
+                _db.Companies.Remove(company);
                 _db.SaveChanges();
             }
         }
 
+        public int GetCompanyCount()
+        {
+            using (_db)
+            {
+                return (from c in _db.Companies select c).Count();
+            }
+        }
     }
 }
