@@ -11,7 +11,7 @@
     List<MainBanner> banners = new BannerHandler().GetAllBanners();
     int count = 0;
     int numb = 0;
-    List<TourSummaryModel> PoluplarTours = ModelHelper.ToTourSummaryList(new TourHandler().GetLatestTours(8));
+    List<TourSummaryModel> PopularTours = ModelHelper.ToTourSummaryList(new TourHandler().GetLatestToursAsc(4));
 }
 
 <!DOCTYPE html>
@@ -63,8 +63,9 @@
 
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("HOME", "Index", "Home")</li>
-                    <li><a href="#">All Tours</a></li>
-                    <li><a href="#">Tour Companies</a></li>
+                    <li><a href="#">Pakistan</a></li>
+                    <li><a href="#">Our Tours</a></li>
+                    <li><a href="@Url.Action("ContactUs","Home")">Contact Us</a></li>
 
                     <!-- User Detail Dropdown with custom CSS -->
 
@@ -146,9 +147,9 @@
                         Popular T<i class="fa fa-globe"></i>urs
                     </h4>
                     <ul class="list-group text-center">
-                        @for (int i = 0; i < 10; i++)
+                        @foreach (var p in PopularTours)
                         {
-                            <li class="list-group-item">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+                            @Html.Partial("~/Views/Shared/_ShortTourView.cshtml", p)
                         }
                     </ul>
                 </div>

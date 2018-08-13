@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Runtime.Remoting.Messaging;
 using System.Web;
 using System.Web.Mvc;
 using BookPakistanTourClasslibrary.FeedbackManagement;
 using BookPakistanTourClasslibrary.TourManagement;
+using BookPakistanTourClasslibrary.UserManagement;
 using FYProject1.Models;
 
 namespace BookPakistanTour.Controllers
@@ -64,6 +67,41 @@ namespace BookPakistanTour.Controllers
 
         }
 
+        [HttpGet]
+        public ActionResult ContactUs()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ContactUs(FormCollection fdata)
+        {
+            try
+            {
+                var message = new MailMessage();
+                message.From = new MailAddress(fdata["Email"]);
+                message.To.Add("pakistantourism.2018@gmail.com");
+                message.Subject = "Contact Us From Email: " + message.From;
+                message.IsBodyHtml = true;
+                message.Body = fdata["Msg"] + "  <br/><br/> From: " + fdata["Name"] + " <br/> Email: " + message.From;
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = "smtp.gmail.com";
+                smtp.Port = 587;
+
+                smtp.Credentials = new System.Net.NetworkCredential
+                    ("pakistantourism.2018@gmail.com", "pakistan1947");
+
+                smtp.EnableSsl = true;
+                smtp.Send(message);
+                ViewBag.SuccessMessage = "Thank you for Contacting us ";
+            }
+            catch (Exception ex)
+            {
+                ModelState.Clear();
+                ViewBag.ErrorMessage = $" Sorry we are facing Problem here {ex.Message}";
+            }
+            return View();
+        }
 
     }
 }

@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "ContactUs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="center-block text-center">
+    <h2>Contact Us</h2>
+
+    @if (ViewBag.SuccessMessage != null)
+    {
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Success </strong> @ViewBag.SuccessMessage
+        </div>
+    }
+    else if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Error! </strong> @ViewBag.ErrorMessage
+        </div>
+    }
+
+    @using (Html.BeginForm("ContactUs", "Home", FormMethod.Post, new { id = "contactusform", enctype = "multipart/form-data" }))
+    {
+
+        <div class="form-group">
+            <label class="control-label" for="Name">Name</label>
+            <input type="text" class="form-control center-block" id="Name" name="Name" placeholder="Name">
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="Email">Email address</label>
+            <input type="email" class="form-control center-block" id="Email" name="Email" placeholder="Enter email">
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="Msg">Message</label>
+            <textarea id="Msg" name="Msg" class="form-control center-block" placeholder="Message" rows="3" style="resize: none"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-df">Submit</button>
+
+    }
+
+</div>
