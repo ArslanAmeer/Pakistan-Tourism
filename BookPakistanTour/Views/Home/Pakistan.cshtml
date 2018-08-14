@@ -1,0 +1,13 @@
+﻿@model List<BookPakistanTourClasslibrary.HistoryManagement.History>
+
+@{
+    ViewBag.Title = "Pakistan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center"> About Our Pakistan</h2>
+
+@foreach (var m in Model)
+{
+    @Html.Partial("~/Views/Shared/_HistorySummaryView.cshtml", m)
+}
