@@ -1,0 +1,47 @@
+﻿@model IEnumerable<BookPakistanTourClasslibrary.BookingManagment.Booking>
+
+@{
+    ViewBag.Title = "BookingList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="col-lg-9">
+    <h2>BookingList</h2>
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.User)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tour)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tour.Company)
+            </th>
+
+            <th>Actions</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.FullName)
+                </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.Tour.Title)*@
+                    <a href="@Url.Action("TourDetails","Tour", new { id = item.Tour.Id})">@item.Tour.Title</a>
+                </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.Tour.Company.Name)*@
+                    <a href="@Url.Action("CompanyDetails","Company", new { id = item.Tour.Company.Id})">@item.Tour.Company.Name</a>
+                </td>
+                <td>
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

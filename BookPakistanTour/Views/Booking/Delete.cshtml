@@ -1,0 +1,36 @@
+﻿@model BookPakistanTourClasslibrary.BookingManagment.Booking
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="col-lg-9">
+    <h2>Delete</h2>
+
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <h4>Booking</h4>
+        <hr />
+        <dl class="dl-horizontal">
+
+            @Model.User.FullName
+            <br />
+            @Model.Tour.Title
+            <br />
+            @Model.Tour.Company.Name
+            <br />
+
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" /> |
+                @Html.ActionLink("Back to List", "BookingList")
+            </div>
+        }
+    </div>
+</div>
