@@ -1,0 +1,12 @@
+﻿@using BookPakistanTour.Models
+
+@{
+    ViewBag.Title = "Our Tours";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<TourSummaryModel> tours = ViewBag.ourtours;
+}
+
+
+@Html.Partial("~/Views/Shared/_TourSummaryView.cshtml", tours)
+
+
