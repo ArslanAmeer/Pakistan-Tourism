@@ -89,7 +89,7 @@ namespace BookPakistanTour.Controllers
                     smtp.EnableSsl = true;
                     smtp.Send(message);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     return View();
                 }

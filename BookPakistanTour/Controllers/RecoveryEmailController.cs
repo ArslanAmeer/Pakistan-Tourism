@@ -61,7 +61,7 @@ namespace BookPakistanTour.Controllers
                     ViewBag.HideSlider = true;
                     return View();
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     ViewBag.error = "Error Sending Mail. Please Try Again Later!";
                     ViewBag.HideSlider = true;
