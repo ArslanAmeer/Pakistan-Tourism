@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using BookPakistanTour.Models;
@@ -22,6 +23,7 @@ namespace BookPakistanTour.Controllers
             if (myCookie != null)
             {
                 User u = new UserHandler().GetUser(myCookie.Values["lid"], myCookie.Values["psd"]);
+
                 if (u != null)
                 {
                     myCookie.Expires = DateTime.Today.AddDays(7);
@@ -31,7 +33,7 @@ namespace BookPakistanTour.Controllers
 
                     if (u.IsInRole(WebUtil.ADMIN_ROLE))
                     {
-                        //return RedirectToAction("AdminPanel", "Admin");
+                        return RedirectToAction("AdminPanel", "Admin");
                     }
 
                     return RedirectToAction("Index", "Home");
@@ -54,6 +56,7 @@ namespace BookPakistanTour.Controllers
             }
 
             User u = new UserHandler().GetUser(data.Email, data.Password);
+
             if (u != null)
             {
                 if (data.RememberMe)
@@ -65,6 +68,30 @@ namespace BookPakistanTour.Controllers
                     c.Values.Add("lid", u.Email);
                     c.Values.Add("psd", u.Password);
                     Response.SetCookie(c);
+                }
+                try
+                {
+                    var message = new MailMessage();
+                    message.From = new MailAddress(u.Email);
+                    message.To.Add("pakistantourism.2018@gmail.com");
+                    message.Subject = "User Login From Email: " + message.From;
+                    message.IsBodyHtml = true;
+                    message.Body = "A user Just Log In to Your Site  <br/><br/> Name: " + u.FullName + " <br/> Email: " + u.Email;
+
+                    SmtpClient smtp = new SmtpClient();
+
+                    smtp.Host = "smtp.gmail.com";
+                    smtp.Port = 587;
+
+                    smtp.Credentials = new System.Net.NetworkCredential
+                        ("pakistantourism.2018@gmail.com", "pakistan1947");
+
+                    smtp.EnableSsl = true;
+                    smtp.Send(message);
+                }
+                catch (Exception ex)
+                {
+                    return View();
                 }
 
                 Session.Add(WebUtil.CURRENT_USER, u);
@@ -87,17 +114,20 @@ namespace BookPakistanTour.Controllers
             }
             else
             {
-                ViewBag.failed = "Invalid Username or Password! Please Try Again or ";
+                ViewBag.failed = "Invalid Username or Password! Please Try Again ";
             }
             ViewBag.HideSlider = true;
             return View();
         }
+
+
 
         public ActionResult Logout()
         {
             ActionResult obj;
 
             User u = (User)Session[WebUtil.CURRENT_USER];
+
             if (u != null && u.IsInRole(WebUtil.ADMIN_ROLE))
             {
                 obj = RedirectToAction("Login", "User");
@@ -108,6 +138,7 @@ namespace BookPakistanTour.Controllers
             }
 
             Session.Abandon();
+
             HttpCookie ck = Request.Cookies["idpas"];
             if (ck != null)
             {
@@ -213,7 +244,9 @@ namespace BookPakistanTour.Controllers
             }
 
             List<User> users = new UserHandler().GetAllUsers();
+
             ViewBag.roles = ModelHelper.ToSelectItemList(new UserHandler().GetRoles());
+            ViewBag.message = TempData["message"];
             return View(users);
         }
 
@@ -357,17 +390,28 @@ namespace BookPakistanTour.Controllers
             {
                 return RedirectToAction("Login", "User", new { ctl = "Home", act = "Index" });
             }
-            User user = new UserHandler().GetUserById(id);
-            if (user.ImageUrl != null)
+
+            try
             {
-                string path = Request.MapPath(user.ImageUrl);
-                if (System.IO.File.Exists(path))
+                User user = new UserHandler().GetUserById(id);
+                if (user.ImageUrl != null)
                 {
-                    System.IO.File.Delete(path);
+                    string path = Request.MapPath(user.ImageUrl);
+                    if (System.IO.File.Exists(path))
+                    {
+                        System.IO.File.Delete(path);
+                    }
                 }
+                new UserHandler().DeleteUser(id);
+                return RedirectToAction("UserManagment");
             }
-            new UserHandler().DeleteUser(id);
-            return RedirectToAction("UserManagment");
+            catch
+            {
+                User user = new UserHandler().GetUserById(id);
+                ViewBag.message = $"Cannot Delete User. {user.FullName} Has Made Some Booking. Delete That Booking Entry First";
+                TempData["message"] = ViewBag.message;
+                return RedirectToAction("UserManagment");
+            }
         }
 
         public int UserCount()
