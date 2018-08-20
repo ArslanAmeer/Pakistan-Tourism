@@ -8,6 +8,7 @@ using BookPakistanTourClasslibrary.BannerManagement;
 using BookPakistanTourClasslibrary.BookingManagment;
 using BookPakistanTourClasslibrary.CompanyManagement;
 using BookPakistanTourClasslibrary.FeedbackManagement;
+using BookPakistanTourClasslibrary.HistoryManagement;
 using BookPakistanTourClasslibrary.LocationManagement;
 using BookPakistanTourClasslibrary.TourManagement;
 using BookPakistanTourClasslibrary.UserManagement;
@@ -39,5 +40,6 @@ namespace BookPakistanTourClasslibrary
 
         public DbSet<Booking> Bookings { get; set; }
 
+        public DbSet<History> Histories { get; set; }
     }
 }

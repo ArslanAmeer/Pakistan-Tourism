@@ -1,12 +1,27 @@
 ﻿@using BookPakistanTour.Models
+@using BookPakistanTourClasslibrary.HistoryManagement
 
 @{
     ViewBag.Title = "Pakistan Tourism!";
     Layout = "~/Views/Shared/_Layout.cshtml";
     List<TourSummaryModel> tours = ViewBag.indexTours;
+    List<History> history = ViewBag.indexhistory;
 }
 
+<div class="row">
+    @Html.Partial("~/Views/Shared/_TourSummaryView.cshtml", tours)
+</div>
 
-@Html.Partial("~/Views/Shared/_TourSummaryView.cshtml", tours)
 
+<br />
+<hr style="border: solid 1px darkgray" />
+
+<div class="row">
+    <h3 class="text-center">Learn About Pakistan</h3>
+    <hr />
+    @foreach (var h in history)
+    {
+        @Html.Partial("~/Views/Shared/_HistorySummaryView.cshtml", h)
+    }
+</div>
 

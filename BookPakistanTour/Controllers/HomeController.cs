@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Runtime.Remoting.Messaging;
 using System.Web;
 using System.Web.Mvc;
+using BookPakistanTourClasslibrary;
+using BookPakistanTourClasslibrary.CompanyManagement;
 using BookPakistanTourClasslibrary.FeedbackManagement;
+using BookPakistanTourClasslibrary.HistoryManagement;
 using BookPakistanTourClasslibrary.TourManagement;
 using BookPakistanTourClasslibrary.UserManagement;
 using FYProject1.Models;
@@ -18,7 +22,15 @@ namespace BookPakistanTour.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            ViewBag.indexTours = ModelHelper.ToTourSummaryList(new TourHandler().GetLatestTours(8));
+            ViewBag.indexTours = ModelHelper.ToTourSummaryList(new TourHandler().GetLatestTours(6));
+            DbContextClass db = new DbContextClass();
+            ViewBag.indexhistory = db.Histories.Take(3).ToList();
+            return View();
+        }
+
+        public ActionResult OurTours()
+        {
+            ViewBag.ourtours = ModelHelper.ToTourSummaryList(new TourHandler().GetAllTours());
             return View();
         }
 
@@ -103,5 +115,36 @@ namespace BookPakistanTour.Controllers
             return View();
         }
 
+        public ActionResult HistoryDetail(int id)
+        {
+            DbContextClass db = new DbContextClass();
+            History history = db.Histories.Find(id);
+            ViewBag.HideSlider = true;
+            return View(history);
+        }
+
+        public ActionResult Pakistan()
+        {
+            DbContextClass db = new DbContextClass();
+            List<History> history = db.Histories.ToList();
+            return View(history);
+        }
+
+        public ActionResult Companies()
+        {
+            List<Company> companies = new CompanyHandler().GetAllCompanies();
+            return View(companies);
+        }
+
+        public ActionResult CompanyDetails(int id)
+        {
+            Company company = new CompanyHandler().GetCompanybyId(id);
+            return View(company);
+        }
+
+        public ActionResult AboutUs()
+        {
+            return View();
+        }
     }
 }
