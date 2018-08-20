@@ -1,0 +1,13 @@
+﻿@model List<BookPakistanTourClasslibrary.CompanyManagement.Company>
+
+@{
+    ViewBag.Title = "Companies";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">Travel Companies</h2>
+
+@foreach (var c in Model)
+{
+    @Html.Partial("~/Views/Shared/_CompanySummaryView.cshtml", c)
+}
