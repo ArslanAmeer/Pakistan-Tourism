@@ -11,7 +11,7 @@ namespace BookPakistanTour.Models
         [Display(Name = "Email")]
         [Required(ErrorMessage = "The Email field is Required")]
         [RegularExpression(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*",
-            ErrorMessage = "Email Not Varified !!")]
+            ErrorMessage = "Email Not Verified !!")]
         public string Email { get; set; }
 
 

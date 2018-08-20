@@ -31,7 +31,7 @@ namespace FYProject1.Models
             return templist;
         }
 
-        // Getting few data from mobile entity class to Camera Summary Class
+        // COnverting Tour model to TourSUmjmary MOdel for smaller or lighter use
 
         public static TourSummaryModel ToTourSummary(Tour tour)
         {
@@ -47,7 +47,7 @@ namespace FYProject1.Models
             };
         }
 
-        // Convert Camera List Items to Camera Summry List Items
+        // Convert Tour List Items to Tour Summry List Items
 
         public static List<TourSummaryModel> ToTourSummaryList(IEnumerable<Tour> tour)
         {
