@@ -56,6 +56,7 @@
     <Compile Include="DbContextClass.cs" />
     <Compile Include="FeedbackManagement\Feedback.cs" />
     <Compile Include="FeedbackManagement\FeedbackHandler.cs" />
+    <Compile Include="HistoryManagement\History.cs" />
     <Compile Include="LocationManagement\City.cs" />
     <Compile Include="LocationManagement\Country.cs" />
     <Compile Include="LocationManagement\LocationHandler.cs" />
@@ -82,6 +83,14 @@
     <Compile Include="Migrations\201808131816300_AddNamePropinFeedback.cs" />
     <Compile Include="Migrations\201808131816300_AddNamePropinFeedback.Designer.cs">
       <DependentUpon>201808131816300_AddNamePropinFeedback.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808140904291_AddNewHistryClass.cs" />
+    <Compile Include="Migrations\201808140904291_AddNewHistryClass.Designer.cs">
+      <DependentUpon>201808140904291_AddNewHistryClass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808151458376_UpdateBookingClass.cs" />
+    <Compile Include="Migrations\201808151458376_UpdateBookingClass.Designer.cs">
+      <DependentUpon>201808151458376_UpdateBookingClass.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -115,6 +124,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808131816300_AddNamePropinFeedback.resx">
       <DependentUpon>201808131816300_AddNamePropinFeedback.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808140904291_AddNewHistryClass.resx">
+      <DependentUpon>201808140904291_AddNewHistryClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808151458376_UpdateBookingClass.resx">
+      <DependentUpon>201808151458376_UpdateBookingClass.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
