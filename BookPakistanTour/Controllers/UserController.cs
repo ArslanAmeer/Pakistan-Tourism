@@ -71,22 +71,23 @@ namespace BookPakistanTour.Controllers
                 }
                 try
                 {
-                    var message = new MailMessage();
-                    message.From = new MailAddress(u.Email);
+                    var message = new MailMessage { From = new MailAddress(u.Email) };
                     message.To.Add("pakistantourism.2018@gmail.com");
                     message.Subject = "User Login From Email: " + message.From;
                     message.IsBodyHtml = true;
                     message.Body = "A user Just Log In to Your Site  <br/><br/> Name: " + u.FullName + " <br/> Email: " + u.Email;
 
-                    SmtpClient smtp = new SmtpClient();
+                    SmtpClient smtp = new SmtpClient
+                    {
+                        Host = "smtp.gmail.com",
+                        Port = 587,
+                        Credentials = new System.Net.NetworkCredential
+                            ("pakistantourism.2018@gmail.com", "pakistan1947"),
+                        EnableSsl = true
+                    };
 
-                    smtp.Host = "smtp.gmail.com";
-                    smtp.Port = 587;
 
-                    smtp.Credentials = new System.Net.NetworkCredential
-                        ("pakistantourism.2018@gmail.com", "pakistan1947");
 
-                    smtp.EnableSsl = true;
                     smtp.Send(message);
                 }
                 catch (Exception)

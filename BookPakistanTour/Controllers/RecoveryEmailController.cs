@@ -36,23 +36,24 @@ namespace BookPakistanTour.Controllers
                 try
                 {
                     string randomnumb = Path.GetRandomFileName().Replace(".", "");
-                    var message = new MailMessage();
-                    message.From = new MailAddress("pakistantourism.2018@gmail.com");
+                    var message = new MailMessage { From = new MailAddress("pakistantourism.2018@gmail.com") };
                     message.To.Add(data.Email);
                     message.Subject = "-No-Reply- Password Recovery Email by PAKISTAN TOURISM";
                     message.IsBodyHtml = true;
                     message.Body = "Please use this password: <b><u>" + randomnumb +
                                    "</u></b> , Next Time You Login! And dont forget to change your password";
 
-                    SmtpClient smtp = new SmtpClient();
+                    SmtpClient smtp = new SmtpClient
+                    {
+                        Host = "smtp.gmail.com",
+                        Port = 587,
+                        Credentials = new System.Net.NetworkCredential
+                            ("pakistantourism.2018@gmail.com", "pakistan1947"),
+                        EnableSsl = true
+                    };
 
-                    smtp.Host = "smtp.gmail.com";
-                    smtp.Port = 587;
 
-                    smtp.Credentials = new System.Net.NetworkCredential
-                        ("pakistantourism.2018@gmail.com", "pakistan1947");
 
-                    smtp.EnableSsl = true;
                     smtp.Send(message);
                     user.Password = randomnumb;
                     new UserHandler().UpdateUser(user);

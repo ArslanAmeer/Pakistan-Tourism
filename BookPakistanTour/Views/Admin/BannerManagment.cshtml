@@ -32,7 +32,7 @@
                             @Html.DisplayFor(modelItem => item.Banner_Url)
                         </td>*@
                     <td>
-                        <img src="@Url.Content(item.BannerUrl)" class="img-responsive img-rounded" />
+                        <img src="@Url.Content(item.BannerUrl)" class="img-responsive img-rounded" alt="@item.Caption" />
                     </td>
                     <td class="col-lg-5 text-center">
                         @Html.ActionLink("Details", "BannerDetails", new { id = item.Id }) |
