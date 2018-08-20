@@ -20,6 +20,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
+    <link href="~/ImagesData/SiteImages/pakistan.png" rel="icon" type="image/x-icon" />
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
@@ -63,8 +64,9 @@
 
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("HOME", "Index", "Home")</li>
-                    <li><a href="#">Pakistan</a></li>
-                    <li><a href="#">Our Tours</a></li>
+                    <li><a href="@Url.Action("Pakistan","Home")">Pakistan</a></li>
+                    <li><a href="@Url.Action("OurTours","Home")">Our Tours</a></li>
+                    <li><a href="@Url.Action("Companies","Home")">Travel Companies</a></li>
                     <li><a href="@Url.Action("ContactUs","Home")">Contact Us</a></li>
 
                     <!-- User Detail Dropdown with custom CSS -->
@@ -138,15 +140,16 @@
                         a precious gift and treasure and which, we
                         hope other will share with us.
                     </p>
+                    <blockquote>- Mohammad Ali Jinnah</blockquote>
                 </div>
 
                 <hr />
 
                 <div class="list-group">
-                    <h4 class="list-group-item-heading text-center notextselect" style="margin-bottom: 20px; cursor: pointer">
+                    <h4 data-toggle="collapse" data-target="#camCol" class="list-group-item-heading text-center notextselect" style="margin-bottom: 20px; cursor: pointer">
                         Popular T<i class="fa fa-globe"></i>urs
                     </h4>
-                    <ul class="list-group text-center">
+                    <ul class="list-group text-center collapse in" id="camCol">
                         @foreach (var p in PopularTours)
                         {
                             @Html.Partial("~/Views/Shared/_ShortTourView.cshtml", p)
@@ -165,7 +168,6 @@
                     <div id="slider" class="carousel slide" data-ride="carousel">
 
                         <!-- Intializers & Indicators -->
-
                         <ol class="carousel-indicators">
                             @foreach (var dummy in banners)
                             {
@@ -193,7 +195,7 @@
                                         <img class="img-responsive" src="@b.BannerUrl" alt="loading..." />
                                         <div class="carousel-caption">
                                             <h3>@b.Caption</h3>
-                                            @*<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>*@
+                                            @*<p>@b.Caption</p>*@
                                         </div>
                                     </div>
                                 }
@@ -203,7 +205,7 @@
                                         <img class="img-responsive" src="@b.BannerUrl" alt="loading..." />
                                         <div class="carousel-caption">
                                             <h3>@b.Caption</h3>
-                                            @*<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>*@
+                                            @*<p>@b.Caption</p>*@
                                         </div>
                                     </div>
                                 }
@@ -246,7 +248,27 @@
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script type="text/javascript">
 
+        // --> RESPONSIVNESS of Main LIST ITEMS
+
+        var listcamCol;
+        if (matchMedia) {
+            listcamCol = document.getElementById("camCol");
+            const mq = window.matchMedia("(min-width: 1200px)");
+            mq.addListener(widthChange);
+            widthChange(mq);
+        }
+        function widthChange(mq) {
+            if (mq.matches) {
+                listcamCol.classList.add("in");
+                listcamCol.style.textAlign = "left";
+            } else {
+                listcamCol.classList.remove("in");
+                listcamCol.style.textAlign = "center";
+            }
+        }
+    </script>
 
     @RenderSection("myScript", false)
 </body>

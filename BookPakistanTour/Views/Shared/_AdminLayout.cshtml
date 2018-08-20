@@ -10,7 +10,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title BPT-Admin</title>
+    <title>🚨 @ViewBag.Title BPT-Admin</title>
+    <link href="~/ImagesData/SiteImages/pakistan.png" rel="icon" type="image/x-icon" />
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
@@ -42,8 +43,10 @@
 
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("HOME", "Index", "Home")</li>
-                    <li><a href="#">All Tours</a></li>
-                    <li><a href="#">Tour Companies</a></li>
+                    <li><a href="@Url.Action("Pakistan","Home")">Pakistan</a></li>
+                    <li><a href="@Url.Action("OurTours","Home")">Our Tours</a></li>
+                    <li><a href="@Url.Action("Companies","Home")">Travel Companies</a></li>
+                    <li><a href="@Url.Action("ContactUs","Home")">Contact Us</a></li>
 
                     <!-- User Detail Dropdown with custom CSS -->
 
@@ -110,6 +113,8 @@
                     <a href="@Url.Action("UserManagment","User")" class="list-group-item"> User Management <i class="fa fa-group"></i><i class="badge" style="font-size:x-small;margin-top:2px">@Html.Action("UserCount", "User")</i></a>
                     <a href="@Url.Action("BannerManagment","Admin")" class="list-group-item"> Main Page Banners <span class="fa fa-image"></span><i class="badge" style="font-size:x-small;margin-top:2px">@Html.Action("GetBannerCount", "Admin")</i></a>
                     <a href="@Url.Action("LocationManagment","Location")" class="list-group-item">Location Management <span class="fa fa-map-marker"></span><span class="badge" style="font-size:x-small;margin-top:2px">@Html.Action("GetCountriesCount", "Location")</span></a>
+                    <a href="@Url.Action("Index","History")" class="list-group-item">History Management <span class="fa fa-book"></span><span class="badge" style="font-size:x-small;margin-top:2px">@Html.Action("GetHistoryCount", "History")</span></a>
+                    <a href="@Url.Action("BookingList","Booking")" class="list-group-item"> BOOKINGS! <i class="fa fa-ticket"></i><i class="badge" style="font-size:x-small; margin-top:2px">@Html.Action("GetBokingCount", "Booking")</i></a>
                 </div>
             </div>
 

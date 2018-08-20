@@ -7,8 +7,8 @@
     {
         <div id="proditem" class="col-lg-4">
             <div class="thumbnail notextselect">
-                <a href="@Url.Action("TourDetail","Home", new { id=Convert.ToInt32(p.Id) })" class="img-thumbnail text-center center-block" style="text-decoration:none; color: inherit; width: 250px; height: 250px">
-                    <img style="height: 100%" name="sumimg" id="sumig" src="@Url.Content(p.ImageUrl)" alt="Loading..." /> <!--Thumbnail Image (first or Default Image)-->
+                <a href="@Url.Action("TourDetail","Home", new { id=Convert.ToInt32(p.Id) })" class="img-thumbnail text-center center-block" style="text-decoration:none; color: inherit; width: 250px; height: 250px; background-image: url(@p.ImageUrl); background-size: cover; background-repeat: no-repeat; background-position: 50%;">
+                    @*<img style="height: 100%" name="sumimg" id="sumig" src="@Url.Content(p.ImageUrl)" alt="Loading..." />*@ <!--Thumbnail Image (first or Default Image)-->
                 </a>
                 <small id="company"><a href="@Url.Action("ToursByCompany","Home",new { name = p.Company })" class="text-muted" style="text-decoration:none">@p.Company</a></small> <!-- Brand -->
                 @if (p.Sale != 0)
