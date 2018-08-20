@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BookPakistanTourClasslibrary.FeedbackManagement;
 
 namespace BookPakistanTourClasslibrary.TourManagement
 {
@@ -70,9 +71,10 @@ namespace BookPakistanTourClasslibrary.TourManagement
         {
             using (_db)
             {
-                _db.Entry(tour.Company).State = EntityState.Unchanged;
+                _db.Entry(tour.Company.City.Country).State = EntityState.Unchanged;
+                List<Feedback> feedback = _db.Feedbacks.Where(f => f.Tour.Id == tour.Id).ToList();
+                _db.Feedbacks.RemoveRange(feedback);
                 _db.Entry(tour).State = EntityState.Deleted;
-                _db.Tours.Remove(tour);
                 _db.SaveChanges();
             }
         }
@@ -94,6 +96,18 @@ namespace BookPakistanTourClasslibrary.TourManagement
                         .Include(a => a.TourImages)
                         where t.Company.Name == name
                         select t).ToList();
+            }
+        }
+
+        public List<Tour> GetLatestToursAsc(int i)
+        {
+            using (_db)
+            {
+                return (from t in _db.Tours
+                        .Include(t => t.Company)
+                        .Include(t => t.TourImages)
+                        orderby t.DepartureDate ascending
+                        select t).Take(i).ToList();
             }
         }
     }
