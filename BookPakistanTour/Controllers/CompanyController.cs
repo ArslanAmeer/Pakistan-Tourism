@@ -23,12 +23,20 @@ namespace BookPakistanTour.Controllers
                 return RedirectToAction("Login", "User", new { ctl = "Home", act = "Index" });
             }
             List<Company> companies = new CompanyHandler().GetAllCompanies();
+
+            ViewBag.message = TempData["message"];
+
             return View(companies);
         }
 
         // GET: Company/Details/
         public ActionResult CompanyDetails(int id)
         {
+            User u = (User)Session[WebUtil.CURRENT_USER];
+            if (!(u != null && u.IsInRole(WebUtil.ADMIN_ROLE)))
+            {
+                return RedirectToAction("Login", "User", new { ctl = "Admin", act = "AdminPanel" });
+            }
             Company company = new CompanyHandler().GetCompanybyId(id);
             return View(company);
         }
@@ -36,6 +44,11 @@ namespace BookPakistanTour.Controllers
         // GET: Company/Create
         public ActionResult AddCompany()
         {
+            User u = (User)Session[WebUtil.CURRENT_USER];
+            if (!(u != null && u.IsInRole(WebUtil.ADMIN_ROLE)))
+            {
+                return RedirectToAction("Login", "User", new { ctl = "Admin", act = "AdminPanel" });
+            }
             LocationHandler lh = new LocationHandler();
             ViewBag.CountryList = ModelHelper.ToSelectItemList(lh.GetCountries());
             return View();
@@ -45,6 +58,11 @@ namespace BookPakistanTour.Controllers
         [HttpPost]
         public ActionResult AddCompany(FormCollection fdata)
         {
+            User u = (User)Session[WebUtil.CURRENT_USER];
+            if (!(u != null && u.IsInRole(WebUtil.ADMIN_ROLE)))
+            {
+                return RedirectToAction("Login", "User", new { ctl = "Admin", act = "AdminPanel" });
+            }
             try
             {
                 Company c = new Company
@@ -84,6 +102,11 @@ namespace BookPakistanTour.Controllers
         // GET: Company/Edit/
         public ActionResult EditCompany(int id)
         {
+            User u = (User)Session[WebUtil.CURRENT_USER];
+            if (!(u != null && u.IsInRole(WebUtil.ADMIN_ROLE)))
+            {
+                return RedirectToAction("Login", "User", new { ctl = "Admin", act = "AdminPanel" });
+            }
             Company company = new CompanyHandler().GetCompanybyId(id);
             return View(company);
         }
@@ -116,6 +139,11 @@ namespace BookPakistanTour.Controllers
         // GET: Company/Delete/5
         public ActionResult DeleteCompany(int id)
         {
+            User u = (User)Session[WebUtil.CURRENT_USER];
+            if (!(u != null && u.IsInRole(WebUtil.ADMIN_ROLE)))
+            {
+                return RedirectToAction("Login", "User", new { ctl = "Admin", act = "AdminPanel" });
+            }
             Company company = new CompanyHandler().GetCompanybyId(id);
             if (company == null)
             {
@@ -128,6 +156,11 @@ namespace BookPakistanTour.Controllers
         [HttpPost, ActionName("DeleteCompany")]
         public ActionResult DeleteCompanyConfirmed(int id)
         {
+            User u = (User)Session[WebUtil.CURRENT_USER];
+            if (!(u != null && u.IsInRole(WebUtil.ADMIN_ROLE)))
+            {
+                return RedirectToAction("Login", "User", new { ctl = "Admin", act = "AdminPanel" });
+            }
             try
             {
                 Company company = new CompanyHandler().GetCompanybyId(id);
@@ -136,7 +169,9 @@ namespace BookPakistanTour.Controllers
             }
             catch
             {
-                return View();
+                ViewBag.message = "Cannot Delete. This Company Is Assigned To Some Tour. Delete That Tour First";
+                TempData["message"] = ViewBag.message;
+                return RedirectToAction("CompanyManagment");
             }
         }
 

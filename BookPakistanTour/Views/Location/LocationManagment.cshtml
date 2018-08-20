@@ -11,6 +11,14 @@
     <h4>List Of Countries</h4>
     <p>@Html.ActionLink("Add New Country", "AddCountry")</p>
 
+    @if (ViewBag.message != null)
+    {
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Error!</strong> @ViewBag.message
+        </div>
+    }
+
     <table id="datatable" class="table table-condensed table-striped table-bordered table-hover">
         <thead>
             <tr>

@@ -21,7 +21,7 @@ namespace BookPakistanTour.Controllers
             {
                 return RedirectToAction("Login", "User", new { ctl = "Admin", act = "AdminPanel" });
             }
-            return View();
+            return RedirectToAction("AddTour", "Tour");
         }
 
         public ActionResult BannerManagment()
@@ -50,6 +50,11 @@ namespace BookPakistanTour.Controllers
         [HttpPost]
         public ActionResult AddBanner(FormCollection fdata)
         {
+            User u = (User)Session[WebUtil.CURRENT_USER];
+            if (!(u != null && u.IsInRole(WebUtil.ADMIN_ROLE)))
+            {
+                return RedirectToAction("Login", "User", new { ctl = "Admin", act = "AdminPanel" });
+            }
             MainBanner b = new MainBanner();
             try
             {
@@ -83,6 +88,11 @@ namespace BookPakistanTour.Controllers
         [HttpGet]
         public ActionResult BannerDetails(int? id)
         {
+            User u = (User)Session[WebUtil.CURRENT_USER];
+            if (!(u != null && u.IsInRole(WebUtil.ADMIN_ROLE)))
+            {
+                return RedirectToAction("Login", "User", new { ctl = "Admin", act = "AdminPanel" });
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -99,6 +109,11 @@ namespace BookPakistanTour.Controllers
 
         public ActionResult BannerDelete(int? id)
         {
+            User u = (User)Session[WebUtil.CURRENT_USER];
+            if (!(u != null && u.IsInRole(WebUtil.ADMIN_ROLE)))
+            {
+                return RedirectToAction("Login", "User", new { ctl = "Admin", act = "AdminPanel" });
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

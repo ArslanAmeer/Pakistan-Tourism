@@ -12,13 +12,19 @@
     <p>
         @Html.ActionLink("Create New", "AddCompany", "Company")
     </p>
+
+    @if (ViewBag.message != null)
+    {
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Error!</strong> @ViewBag.message
+        </div>
+    }
+
     <table class="table">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.FacebookPageUrl)
@@ -34,11 +40,17 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
+
                 <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FacebookPageUrl)
+                    @if (item.FacebookPageUrl != null)
+                    {
+                        <a href="@item.FacebookPageUrl" target="_blank">@item.FacebookPageUrl</a>
+                    }
+                    else
+                    {
+                        <p>No facebook Page</p>
+                    }
+
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "EditCompany", new { id = item.Id }) |

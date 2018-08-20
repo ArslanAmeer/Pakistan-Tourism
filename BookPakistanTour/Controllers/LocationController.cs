@@ -5,6 +5,7 @@ using System.Net;
 using System.Web.Mvc;
 using BookPakistanTourClasslibrary;
 using BookPakistanTourClasslibrary.LocationManagement;
+using BookPakistanTourClasslibrary.UserManagement;
 
 namespace BookPakistanTour.Controllers
 {
@@ -13,12 +14,23 @@ namespace BookPakistanTour.Controllers
         // -- Countries ---
         public ActionResult LocationManagment()
         {
+            User u = (User)Session[WebUtil.CURRENT_USER];
+            if (!(u != null && u.IsInRole(WebUtil.ADMIN_ROLE)))
+            {
+                return RedirectToAction("Login", "User", new { ctl = "Admin", act = "AdminPanel" });
+            }
             List<Country> countries = new LocationHandler().GetCountries();
+            ViewBag.message = TempData["message"];
             return View(countries);
         }
 
         public ActionResult AddCountry()
         {
+            User u = (User)Session[WebUtil.CURRENT_USER];
+            if (!(u != null && u.IsInRole(WebUtil.ADMIN_ROLE)))
+            {
+                return RedirectToAction("Login", "User", new { ctl = "Admin", act = "AdminPanel" });
+            }
             return View();
         }
 
@@ -26,6 +38,11 @@ namespace BookPakistanTour.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddCountry([Bind(Include = "Id,Name,CountryCode,Image_URL")] Country country)
         {
+            User u = (User)Session[WebUtil.CURRENT_USER];
+            if (!(u != null && u.IsInRole(WebUtil.ADMIN_ROLE)))
+            {
+                return RedirectToAction("Login", "User", new { ctl = "Admin", act = "AdminPanel" });
+            }
             if (ModelState.IsValid)
             {
                 new LocationHandler().AddCountry(country);
@@ -36,6 +53,11 @@ namespace BookPakistanTour.Controllers
 
         public ActionResult DeleteCountry(int? id)
         {
+            User u = (User)Session[WebUtil.CURRENT_USER];
+            if (!(u != null && u.IsInRole(WebUtil.ADMIN_ROLE)))
+            {
+                return RedirectToAction("Login", "User", new { ctl = "Admin", act = "AdminPanel" });
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -53,9 +75,25 @@ namespace BookPakistanTour.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteCountryConfirmed(int id)
         {
-            Country country = new LocationHandler().GetCountryById(id);
-            new LocationHandler().DeleteCountry(country);
-            return RedirectToAction("LocationManagment");
+            User u = (User)Session[WebUtil.CURRENT_USER];
+            if (!(u != null && u.IsInRole(WebUtil.ADMIN_ROLE)))
+            {
+                return RedirectToAction("Login", "User", new { ctl = "Admin", act = "AdminPanel" });
+            }
+            try
+            {
+                Country country = new LocationHandler().GetCountryById(id);
+                new LocationHandler().DeleteCountry(country);
+                return RedirectToAction("LocationManagment");
+            }
+            catch
+            {
+                Country country = new LocationHandler().GetCountryById(id);
+                ViewBag.message = $"Cannot Delete Country. Delete All Cities of {country.Name} First";
+                TempData["message"] = ViewBag.message;
+                return RedirectToAction("LocationManagment");
+            }
+
         }
 
         //// -- Cities ---
@@ -70,6 +108,11 @@ namespace BookPakistanTour.Controllers
 
         public ActionResult AddCity(int id, string countryName)
         {
+            User u = (User)Session[WebUtil.CURRENT_USER];
+            if (!(u != null && u.IsInRole(WebUtil.ADMIN_ROLE)))
+            {
+                return RedirectToAction("Login", "User", new { ctl = "Admin", act = "AdminPanel" });
+            }
             ViewBag.CountryID = id;
             ViewBag.CountryName = countryName;
             return View();
@@ -79,6 +122,11 @@ namespace BookPakistanTour.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddCity([Bind(Include = "Id,Name")] City city, int id)
         {
+            User u = (User)Session[WebUtil.CURRENT_USER];
+            if (!(u != null && u.IsInRole(WebUtil.ADMIN_ROLE)))
+            {
+                return RedirectToAction("Login", "User", new { ctl = "Admin", act = "AdminPanel" });
+            }
             City c = new City();
             if (ModelState.IsValid)
             {
@@ -92,6 +140,11 @@ namespace BookPakistanTour.Controllers
 
         public ActionResult DeleteCity(int? id, int countryId)
         {
+            User u = (User)Session[WebUtil.CURRENT_USER];
+            if (!(u != null && u.IsInRole(WebUtil.ADMIN_ROLE)))
+            {
+                return RedirectToAction("Login", "User", new { ctl = "Admin", act = "AdminPanel" });
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -112,9 +165,24 @@ namespace BookPakistanTour.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteCityConfirmed(int id)
         {
-            City city = new LocationHandler().GetCityById(id);
-            new LocationHandler().DeleteCity(city);
-            return RedirectToAction("CityList", new { Id = Convert.ToUInt32(TempData["countryId"]) });
+            User u = (User)Session[WebUtil.CURRENT_USER];
+            if (!(u != null && u.IsInRole(WebUtil.ADMIN_ROLE)))
+            {
+                return RedirectToAction("Login", "User", new { ctl = "Admin", act = "AdminPanel" });
+            }
+            try
+            {
+                City city = new LocationHandler().GetCityById(id);
+                new LocationHandler().DeleteCity(city);
+                return RedirectToAction("CityList", new { Id = Convert.ToUInt32(TempData["countryId"]) });
+            }
+            catch
+            {
+                City city = new LocationHandler().GetCityById(id);
+                ViewBag.message = $"Cannot Delete City. {city.Name} Is Assigned To Some Other Entity (User or Company). Delete That First";
+                TempData["message"] = ViewBag.message;
+                return RedirectToAction("LocationManagment");
+            }
         }
 
         public int GetCountriesCount()

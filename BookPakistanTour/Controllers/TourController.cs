@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+using System.Data.Entity;
+
 using System.Web;
 using System.Web.Mvc;
 using BookPakistanTourClasslibrary;
@@ -23,11 +23,17 @@ namespace BookPakistanTour.Controllers
                 return RedirectToAction("Login", "User", new { ctl = "Home", act = "Index" });
             }
             List<Tour> tours = new TourHandler().GetAllTours();
+            ViewBag.message = TempData["message"];
             return View(tours);
         }
 
         public ActionResult TourDetails(int id)
         {
+            User u = (User)Session[WebUtil.CURRENT_USER];
+            if (!(u != null && u.IsInRole(WebUtil.ADMIN_ROLE)))
+            {
+                return RedirectToAction("Login", "User", new { ctl = "Admin", act = "AdminPanel" });
+            }
             Tour tour = new TourHandler().GetTourById(id);
             return View(tour);
         }
@@ -35,6 +41,11 @@ namespace BookPakistanTour.Controllers
         [HttpGet]
         public ActionResult AddTour()
         {
+            User u = (User)Session[WebUtil.CURRENT_USER];
+            if (!(u != null && u.IsInRole(WebUtil.ADMIN_ROLE)))
+            {
+                return RedirectToAction("Login", "User", new { ctl = "Admin", act = "AdminPanel" });
+            }
             ViewBag.companies = ModelHelper.ToSelectItemList(new CompanyHandler().GetAllCompanies());
             return View();
         }
@@ -93,6 +104,11 @@ namespace BookPakistanTour.Controllers
 
         public ActionResult EditTour(int id)
         {
+            User u = (User)Session[WebUtil.CURRENT_USER];
+            if (!(u != null && u.IsInRole(WebUtil.ADMIN_ROLE)))
+            {
+                return RedirectToAction("Login", "User", new { ctl = "Admin", act = "AdminPanel" });
+            }
             Tour tour = new TourHandler().GetTourById(id);
             ViewBag.companies = ModelHelper.ToSelectItemList(new CompanyHandler().GetAllCompanies());
             return View(tour);
@@ -127,6 +143,11 @@ namespace BookPakistanTour.Controllers
 
         public ActionResult DeleteTour(int id)
         {
+            User u = (User)Session[WebUtil.CURRENT_USER];
+            if (!(u != null && u.IsInRole(WebUtil.ADMIN_ROLE)))
+            {
+                return RedirectToAction("Login", "User", new { ctl = "Admin", act = "AdminPanel" });
+            }
             Tour tour = new TourHandler().GetTourById(id);
             if (tour == null)
             {
@@ -139,18 +160,26 @@ namespace BookPakistanTour.Controllers
         [HttpPost, ActionName("DeleteTour")]
         public ActionResult DeleteTourConfirmed(int id)
         {
+            User u = (User)Session[WebUtil.CURRENT_USER];
+            if (!(u != null && u.IsInRole(WebUtil.ADMIN_ROLE)))
+            {
+                return RedirectToAction("Login", "User", new { ctl = "Admin", act = "AdminPanel" });
+            }
             try
             {
                 Tour tour = new TourHandler().GetTourById(id);
                 new TourHandler().DeleteTour(tour);
+
+
                 return RedirectToAction("TourManagment");
             }
             catch
             {
-                return View();
+                ViewBag.message = "Cannot Delete. This Tour Is Assigned To Some Booking. Delete That Booking First";
+                TempData["message"] = ViewBag.message;
+                return RedirectToAction("TourManagment");
             }
         }
-
 
         public int GetTourCount()
         {
