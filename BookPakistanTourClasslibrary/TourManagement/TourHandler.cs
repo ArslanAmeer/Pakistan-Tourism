@@ -8,7 +8,7 @@ using BookPakistanTourClasslibrary.FeedbackManagement;
 
 namespace BookPakistanTourClasslibrary.TourManagement
 {
-    public class TourHandler
+    public class TourHandler : IDisposable
     {
         private readonly DbContextClass _db = new DbContextClass();
 
@@ -108,6 +108,20 @@ namespace BookPakistanTourClasslibrary.TourManagement
                         .Include(t => t.TourImages)
                         orderby t.DepartureDate ascending
                         select t).Take(i).ToList();
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _db.Dispose();
             }
         }
     }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BookPakistanTourClasslibrary.FeedbackManagement
 {
-    public class FeedbackHandler
+    public class FeedbackHandler : IDisposable
     {
         private readonly DbContextClass _db = new DbContextClass();
 
@@ -83,5 +83,18 @@ namespace BookPakistanTourClasslibrary.FeedbackManagement
             }
         }
 
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _db.Dispose();
+            }
+        }
     }
 }

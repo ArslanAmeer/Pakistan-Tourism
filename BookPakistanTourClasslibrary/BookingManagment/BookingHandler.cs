@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BookPakistanTourClasslibrary.BookingManagment
 {
-    public class BookingHandler
+    public class BookingHandler : IDisposable
     {
         private readonly DbContextClass _db = new DbContextClass();
 
@@ -72,6 +72,20 @@ namespace BookPakistanTourClasslibrary.BookingManagment
         public int BookingCount()
         {
             return (from b in _db.Bookings select b).Count();
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _db.Dispose();
+            }
         }
     }
 }

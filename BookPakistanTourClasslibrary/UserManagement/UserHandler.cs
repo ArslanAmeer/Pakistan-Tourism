@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BookPakistanTourClasslibrary.UserManagement
 {
-    public class UserHandler
+    public class UserHandler : IDisposable
     {
         private readonly DbContextClass _db = new DbContextClass();
 
@@ -148,5 +148,18 @@ namespace BookPakistanTourClasslibrary.UserManagement
             }
         }
 
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _db.Dispose();
+            }
+        }
     }
 }
