@@ -13,7 +13,7 @@ namespace BookPakistanTourClasslibrary.UserManagement
         [Key]
         public int Id { get; set; }
 
-        [Required]
+        [Required, RegularExpression("^[a-zA-Z ]*$")]
         public string FullName { get; set; }
 
         [Required, EmailAddress]
