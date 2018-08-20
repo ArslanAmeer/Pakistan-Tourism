@@ -44,6 +44,14 @@
         </dd>
 
         <dt>
+            Location
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.City.Name), @Html.DisplayFor(model => model.City.Country.Name)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.BirthDate)
         </dt>
 
