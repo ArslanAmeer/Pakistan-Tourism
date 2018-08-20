@@ -16,17 +16,19 @@ namespace BookPakistanTourClasslibrary.BookingManagment
             using (_db)
             {
                 return (from b in _db.Bookings
-                    .Include(b => b.Tour)
+                    .Include(b => b.Tour.Company)
+                    .Include(b => b.User.City)
                         select b).ToList();
             }
         }
 
-        public Booking GetBookingById(int id)
+        public Booking GetBookingById(int? id)
         {
             using (_db)
             {
                 return (from b in _db.Bookings
-                        .Include(b => b.Tour)
+                        .Include(b => b.Tour.Company)
+                        .Include(b => b.User.City)
                         where b.Id == id
                         select b).FirstOrDefault();
             }
@@ -37,7 +39,8 @@ namespace BookPakistanTourClasslibrary.BookingManagment
             using (_db)
             {
                 return (from b in _db.Bookings
-                        .Include(b => b.Tour)
+                        .Include(b => b.Tour.Company)
+                        .Include(b => b.User.City)
                         where b.User.Id == userId
                         select b).ToList();
             }
@@ -48,7 +51,8 @@ namespace BookPakistanTourClasslibrary.BookingManagment
             using (_db)
             {
                 return (from b in _db.Bookings
-                        .Include(b => b.Tour)
+                        .Include(b => b.Tour.Company)
+                        .Include(b => b.User.City)
                         where b.Tour.Id == tourId
                         select b).ToList();
             }
@@ -59,10 +63,15 @@ namespace BookPakistanTourClasslibrary.BookingManagment
             using (_db)
             {
                 _db.Entry(booking.Tour).State = EntityState.Unchanged;
-                _db.Entry(booking.User).State = EntityState.Unchanged;
+                //_db.Entry(booking.User).State = EntityState.Unchanged;
                 _db.Bookings.Add(booking);
                 _db.SaveChanges();
             }
+        }
+
+        public int BookingCount()
+        {
+            return (from b in _db.Bookings select b).Count();
         }
     }
 }
