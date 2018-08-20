@@ -18,6 +18,5 @@ namespace BookPakistanTourClasslibrary.HistoryManagement
 
         public string ImageUrl { get; set; }
 
-
     }
 }

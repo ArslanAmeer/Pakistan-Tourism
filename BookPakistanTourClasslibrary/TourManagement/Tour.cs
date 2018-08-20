@@ -23,6 +23,7 @@ namespace BookPakistanTourClasslibrary.TourManagement
         public string Title { get; set; }
 
         [Required]
+        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
         [Required]
