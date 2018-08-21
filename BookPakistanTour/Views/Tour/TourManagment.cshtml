@@ -20,13 +20,10 @@
         </div>
     }
 
-    <table class="table">
+    <table class="table table-bordered table-condensed table-responsive table-striped">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Price)
@@ -47,13 +44,10 @@
                     @Html.DisplayFor(modelItem => item.Title)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.Price)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Sale)
+                    @Html.DisplayFor(modelItem => item.Sale)%
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.DepartureDate)
