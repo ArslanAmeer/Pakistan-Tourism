@@ -70,7 +70,7 @@
             <div class="form-group">
                 <label class="control-label col-md-2">Upload Image</label>
                 <div class="col-md-10">
-                    <input style="" id="images" name="images" type="file" multiple="multiple" />
+                    <input style="" id="images" name="images" type="file" multiple="multiple" accept="image/*" />
                     @Html.ValidationMessageFor(model => model.TourImages, "", new { @class = "text-danger" })
                 </div>
             </div>
