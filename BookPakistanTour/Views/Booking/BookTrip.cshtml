@@ -25,16 +25,17 @@
             @Html.DisplayNameFor(model => model.Description)
         </dt>
 
-        <dd>
-            @if (Model.Description.Length > 50)
+        <dd style="color:">
+            @if (Model.Description.Length > 200)
             {
-                @Model.Description.Substring(0, 29)
+                @Model.Description.Substring(0, 200)
             }
             else
             {
                 @Html.DisplayFor(model => model.Description)
             }
-
+            . . . .<br />
+            <a href="@Url.Action("TourDetail","Home", new { id = Model.Id})">Read More</a>
         </dd>
 
         <dt>
