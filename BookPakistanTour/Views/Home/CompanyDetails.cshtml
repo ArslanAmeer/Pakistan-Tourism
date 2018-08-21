@@ -13,10 +13,10 @@
     <img src="@Url.Content(Model.ImageUrl)" alt="@Model.Name" style="width: 400px; margin:auto" class="center-block" />
     <hr />
     <div class="row" style="margin: 10px; padding: 20px">
-        <p class="text-primary">@Model.Description</p>
+        <p class="text-primary" style="white-space: pre-line">@Model.Description</p>
         <p><strong>Office Located In:</strong> @Model.City.Name , @Model.City.Country.Name</p>
     </div>
-    <a class="btn btn-primary" href="@Url.Action("ToursByCompany","Home", new { id = Convert.ToInt32(Model.Id) })"> View Tours</a>
+    <a class="btn btn-primary" href="@Url.Action("ToursByCompany","Home", new { name = Model.Name })"> View Tours</a>
     <a href="@url" target="_blank" class="btn btn-primary">Visit Facebook page</a>
 </div>
 

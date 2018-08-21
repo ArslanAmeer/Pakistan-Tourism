@@ -63,7 +63,7 @@ namespace BookPakistanTour.Controllers
                 Tour t = new Tour
                 {
                     Title = fdata["Title"],
-                    Description = fdata["Description"],
+                    Description = fdata["Description"], //.Replace(" ", "&nbsp;").Replace("\n", "<br>"),
                     Price = Convert.ToSingle(fdata["Price"]),
                     Sale = Convert.ToSingle(fdata["Sale"]),
                     Company = new Company { Id = Convert.ToInt32(fdata["CompanyList"]) },
@@ -116,7 +116,7 @@ namespace BookPakistanTour.Controllers
 
         // POST: Company/Edit/5
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult EditTour(Tour tour, FormCollection fdata)
+        public ActionResult EditTour([Bind(Include = "Id,Title,Description,Price,Sale,DepartureDate")]Tour tour)
         {
             try
             {
@@ -128,7 +128,6 @@ namespace BookPakistanTour.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    tour.Company = new Company { Id = Convert.ToInt32(fdata["CompanyList"]) };
                     new TourHandler().UpdateTour(tour);
                     return RedirectToAction("TourManagment");
                 }
@@ -139,7 +138,6 @@ namespace BookPakistanTour.Controllers
                 return View();
             }
         }
-
 
         public ActionResult DeleteTour(int id)
         {
