@@ -61,7 +61,7 @@ namespace BookPakistanTourClasslibrary.TourManagement
         {
             using (_db)
             {
-                //_db.Entry(tour.Company).State = EntityState.Unchanged;
+                _db.Entry(tour.Company).State = EntityState.Unchanged;
                 _db.Entry(tour).State = EntityState.Modified;
                 _db.SaveChanges();
             }

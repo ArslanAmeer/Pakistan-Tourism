@@ -125,7 +125,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="ImagesData\CompanyImages\noimage2.jpg" />
     <Content Include="ImagesData\HistoryImages\noimage2.jpg" />
-    <Content Include="ImagesData\HistoryImages\quaid.jpg" />
     <Content Include="ImagesData\Logo\logo.png" />
     <Content Include="ImagesData\Logo\logo2.png" />
     <Content Include="ImagesData\Logo\pakTbanner.jpg" />

@@ -7,10 +7,6 @@
 
 <h2 class="text-center"> About Our Pakistan</h2>
 
-<img src="~/ImagesData/HistoryImages/quaid.jpg" alt="Pakistan" class="img-responsive center-block" width="70%" />
-
-<p class="text-justify" style="line-break: strict; text-wrap: normal"></p>
-
 @foreach (var m in Model)
 {
     @Html.Partial("~/Views/Shared/_HistorySummaryView.cshtml", m)
