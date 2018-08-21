@@ -69,48 +69,38 @@ namespace BookPakistanTour.Controllers
                     c.Values.Add("psd", u.Password);
                     Response.SetCookie(c);
                 }
-                try
-                {
-                    var message = new MailMessage { From = new MailAddress(u.Email) };
-                    message.To.Add("pakistantourism.2018@gmail.com");
-                    message.Subject = "User Login From Email: " + message.From;
-                    message.IsBodyHtml = true;
-                    message.Body = "A user Just Log In to Your Site  <br/><br/> Name: " + u.FullName + " <br/> Email: " + u.Email;
-
-                    SmtpClient smtp = new SmtpClient
-                    {
-                        Host = "smtp.gmail.com",
-                        Port = 587,
-                        Credentials = new System.Net.NetworkCredential
-                            ("pakistantourism.2018@gmail.com", "pakistan1947"),
-                        EnableSsl = true
-                    };
-
-
-
-                    smtp.Send(message);
-                }
-                catch (Exception)
-                {
-                    return View();
-                }
 
                 Session.Add(WebUtil.CURRENT_USER, u);
 
-                string ctl = Request.QueryString["c"];
-                string act = Request.QueryString["a"];
-
-                if (!string.IsNullOrEmpty(ctl) && !string.IsNullOrEmpty(act))
-                {
-                    return RedirectToAction(act, ctl);
-                }
-                else if (u.IsInRole(WebUtil.ADMIN_ROLE))
+                if (u.IsInRole(WebUtil.ADMIN_ROLE))
                 {
                     return RedirectToAction("AdminPanel", "Admin");
                 }
                 else
                 {
-                    return RedirectToAction("Index", "Home");
+                    try
+                    {
+                        var message = new MailMessage { From = new MailAddress(u.Email) };
+                        message.To.Add("pakistantourism.2018@gmail.com");
+                        message.Subject = "User Login From Email: " + message.From;
+                        message.IsBodyHtml = true;
+                        message.Body = "A user Just Log In to Your Site  <br/><br/> Name: " + u.FullName + " <br/> Email: " + u.Email;
+
+                        SmtpClient smtp = new SmtpClient
+                        {
+                            Host = "smtp.gmail.com",
+                            Port = 587,
+                            Credentials = new System.Net.NetworkCredential
+                                ("pakistantourism.2018@gmail.com", "pakistan1947"),
+                            EnableSsl = true
+                        };
+                        smtp.Send(message);
+                        return RedirectToAction("Index", "Home");
+                    }
+                    catch (Exception)
+                    {
+                        ViewBag.failed = "You are Required to have an Internet Connection to Login.";
+                    }
                 }
             }
             else
@@ -120,8 +110,6 @@ namespace BookPakistanTour.Controllers
             ViewBag.HideSlider = true;
             return View();
         }
-
-
 
         public ActionResult Logout()
         {
