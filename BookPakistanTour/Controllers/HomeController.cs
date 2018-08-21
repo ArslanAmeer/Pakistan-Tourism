@@ -45,6 +45,7 @@ namespace BookPakistanTour.Controllers
             {
                 ViewBag.feedbacks = null;
             }
+            ViewBag.HideSlider = true;
             return View(tour);
         }
 
@@ -127,6 +128,7 @@ namespace BookPakistanTour.Controllers
         {
             DbContextClass db = new DbContextClass();
             List<History> history = db.Histories.ToList();
+            ViewBag.HideSlider = true;
             return View(history);
         }
 
@@ -139,6 +141,8 @@ namespace BookPakistanTour.Controllers
         public ActionResult CompanyDetails(int id)
         {
             Company company = new CompanyHandler().GetCompanybyId(id);
+            ViewBag.HideSlider = true;
+
             return View(company);
         }
 
