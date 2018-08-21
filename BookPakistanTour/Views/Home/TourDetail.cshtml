@@ -10,9 +10,10 @@
     User currentUser = (User)Session[WebUtil.CURRENT_USER];
 }
 
-<h2>Tour Detail</h2>
-
+<h2 class="text-center">Tour Detail</h2>
+<hr />
 <div class="text-center">
+    <img src="@Url.Content(Model.TourImages.First().ImageUrl)" alt="Main-Image" width="60%" />
     <h3>@Model.Title</h3>
 
     <hr />
@@ -22,7 +23,7 @@
             @Html.DisplayNameFor(model => model.Description)
         </dt>
 
-        <dd>
+        <dd style="white-space: pre-line">
             @Html.DisplayFor(model => model.Description)
         </dd>
 
@@ -67,14 +68,21 @@
         </dd>
 
         <dt>
-            Trip Price
+            Price
         </dt>
-
         <dd style="font-size: 1.2em; font-weight: bold">
-            @Html.DisplayFor(model => model.Price)/- Only - Per Person
+            @if ((int)Model.Sale != 0 || (int)Model.Sale != null && Model.Sale > 0)
+            {
+                <strike style="font-weight: normal">@Model.Price </strike> @($"{Model.Price - (Model.Price * Model.Sale / 100):N0}")
+            }
+            else
+            {
+                @Model.Price
+            }
+            /-  Per Person
         </dd>
         <dd>
-            <a class="btn btn-primary" style="width: 30%" href="@Url.Action("BookTrip", "Booking", new { id = Model.Id})">Book Now</a>
+            <a class="btn btn-primary" style="width: 30%" href="@Url.Action("BookTrip", "Booking", new {id = Model.Id})">Book Now</a>
         </dd>
         <hr />
         <dt>
