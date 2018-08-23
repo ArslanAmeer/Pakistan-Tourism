@@ -11,7 +11,7 @@
     List<MainBanner> banners = new BannerHandler().GetAllBanners();
     int count = 0;
     int numb = 0;
-    List<TourSummaryModel> PopularTours = ModelHelper.ToTourSummaryList(new TourHandler().GetLatestToursAsc(4));
+    List<TourSummaryModel> PopularTours = ModelHelper.ToTourSummaryList(new TourHandler().GetLatestToursAsc(3));
 }
 
 <!DOCTYPE html>
@@ -150,6 +150,7 @@
                         Popular T<i class="fa fa-globe"></i>urs
                     </h4>
                     <ul class="list-group text-center collapse in" id="camCol">
+                        <p class="text-center">Top 3</p>
                         @foreach (var p in PopularTours)
                         {
                             @Html.Partial("~/Views/Shared/_ShortTourView.cshtml", p)
