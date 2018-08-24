@@ -124,20 +124,39 @@ namespace BookPakistanTour.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Description,ImageUrl")] History history)
+        public ActionResult Edit([Bind(Include = "Id,Title,Description,ImageUrl")] History history, FormCollection fdata)
         {
             User u = (User)Session[WebUtil.CURRENT_USER];
             if (!(u != null && u.IsInRole(WebUtil.ADMIN_ROLE)))
             {
                 return RedirectToAction("Login", "User", new { ctl = "Admin", act = "AdminPanel" });
             }
-            if (ModelState.IsValid)
+
+            foreach (string fname in Request.Files)
             {
-                db.Entry(history).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                HttpPostedFileBase file = Request.Files[fname];
+                if (!string.IsNullOrEmpty(file?.FileName))
+                {
+
+                    if (history.ImageUrl != null)
+                    {
+                        string oldpth = Request.MapPath(history.ImageUrl);
+                        if (System.IO.File.Exists(oldpth))
+                        {
+                            System.IO.File.Delete(oldpth);
+                        }
+                    }
+
+                    string url = history.ImageUrl;
+                    string path = Request.MapPath(url);
+                    file.SaveAs(path);
+                }
             }
-            return View(history);
+
+            db.Entry(history).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         // GET: History/Delete/5
