@@ -165,7 +165,7 @@
     <Content Include="Content\font-awesome-4.7.0\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\font-awesome-4.7.0\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\font-awesome-4.7.0\fonts\FontAwesome.otf" />
-    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
     <None Include="Scripts\jquery-2.2.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.4.js" />
     <Content Include="Scripts\jquery-2.2.4.min.js" />
