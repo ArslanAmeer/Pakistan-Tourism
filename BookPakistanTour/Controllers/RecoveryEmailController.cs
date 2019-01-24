@@ -48,7 +48,7 @@ namespace BookPakistanTour.Controllers
                         Host = "smtp.gmail.com",
                         Port = 587,
                         Credentials = new System.Net.NetworkCredential
-                            ("pakistantourism.2018@gmail.com", "pakistan1947"),
+                            ("pakistantourism.2018@gmail.com", "pakistantourism1947"),
                         EnableSsl = true
                     };
 
