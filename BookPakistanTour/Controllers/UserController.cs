@@ -81,7 +81,7 @@ namespace BookPakistanTour.Controllers
                     try
                     {
                         var message = new MailMessage { From = new MailAddress(u.Email) };
-                        message.To.Add("pakistantourism.2018@gmail.com");
+                        message.To.Add("ADD_YOUR_OWN");
                         message.Subject = "User Login From Email: " + message.From;
                         message.IsBodyHtml = true;
                         message.Body = "A user Just Log In to Your Site  <br/><br/> Name: " + u.FullName + " <br/> Email: " + u.Email;
@@ -91,7 +91,7 @@ namespace BookPakistanTour.Controllers
                             Host = "smtp.gmail.com",
                             Port = 587,
                             Credentials = new System.Net.NetworkCredential
-                                ("pakistantourism.2018@gmail.com", "pakistantourism1947"),
+                                ("ADD_YOUR_OWN", "ADD_YOUR_OWN"),
                             EnableSsl = true
                         };
                         smtp.Send(message);
