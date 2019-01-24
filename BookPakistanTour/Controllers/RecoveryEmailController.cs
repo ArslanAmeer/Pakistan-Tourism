@@ -36,7 +36,7 @@ namespace BookPakistanTour.Controllers
                 try
                 {
                     string randomnumb = Path.GetRandomFileName().Replace(".", "");
-                    var message = new MailMessage { From = new MailAddress("pakistantourism.2018@gmail.com") };
+                    var message = new MailMessage { From = new MailAddress("ADD_YOUR_OWN") };
                     message.To.Add(data.Email);
                     message.Subject = "-No-Reply- Password Recovery Email by PAKISTAN TOURISM";
                     message.IsBodyHtml = true;
@@ -48,7 +48,7 @@ namespace BookPakistanTour.Controllers
                         Host = "smtp.gmail.com",
                         Port = 587,
                         Credentials = new System.Net.NetworkCredential
-                            ("pakistantourism.2018@gmail.com", "pakistantourism1947"),
+                            ("ADD_YOUR_OWN", "ADD_YOUR_OWN"),
                         EnableSsl = true
                     };
 
