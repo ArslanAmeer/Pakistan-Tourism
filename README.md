@@ -10,7 +10,7 @@ An Online Tour Booking🎫 Site made with Asp.Net MVC Technology using C#, HTML5
 ![](demo.png)
 
 ---
-# **ITS LIVE. [TRY NOW](http://www.pakistantourism.somee.com/)** 😍
+# **ITS LIVE. [TRY NOW](http://www.pakistantourism.ml/)** 😍
 ---
 ## 💡**NOTE :**
 This is only a demonstration of my work & This website is not ready to book online right now.
