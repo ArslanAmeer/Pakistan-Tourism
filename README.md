@@ -10,13 +10,13 @@ An Online Tour Booking🎫 Site made with Asp.Net MVC Technology using C#, HTML5
 ![](demo.png)
 
 ---
-# **ITS LIVE. [TRY NOW](http://www.pakistantourism.ml/)** 😍
+# **ITS LIVE. [TRY NOW](http://pakistantourism.cf/)** 😍
 ---
 ## 💡**NOTE :**
 This is only a demonstration of my work & This website is not ready to book online right now.
 some of services like site analytics, traffic tracking, api services will added later (On Demand).
 
-[ © Copyrights [Arslan Ameer](http://arslanameer.cf) ]
+[ © Copyrights [Arslan Ameer](https://arslanameer.com) ]
 
 ---
 # 🔐LICENSE:
